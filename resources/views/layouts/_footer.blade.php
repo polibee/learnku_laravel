@@ -13,7 +13,7 @@
       </div>
 
       <div class="flex items-center space-x-6">
-        <a href="/about" 
+        <a href="{{route('about')}}" 
            class="text-gray-600 hover:text-gray-900 transition duration-300 text-sm md:text-base">
           关于
         </a>
