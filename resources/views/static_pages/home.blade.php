@@ -12,7 +12,7 @@
           一切，将从这里开始。
         </p>
         <div class="mt-8 flex justify-center">
-          <a class="bg-green-500 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 ease-in-out transform hover:-translate-y-1" href="#" role="button">
+          <a class="bg-green-500 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 ease-in-out transform hover:-translate-y-1" href="{{route('signup')}}" role="button">
             现在注册
           </a>
         </div>
