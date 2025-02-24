@@ -8,6 +8,7 @@
     @include('layouts._header')
     <div class="container mx-auto">
       <div class="md:ml-12 md:w-10/12">
+        @include('shared._messages')
         @yield('content')
         @include('layouts._footer')
       </div>
