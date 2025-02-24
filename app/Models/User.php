@@ -45,4 +45,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    public function gravatar($size='100')
+    {
+        $hash=md5(strtolower(trim($this->attributes['email'])));
+        return "https://dn-qiniu-avatar.qbox.me/avatar/$hash?s=$size";
+    }
 }
