@@ -16,7 +16,7 @@
             
             <div class="invisible group-hover:visible opacity-0 group-hover:opacity-100 absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 transition-all duration-200">
               <a href="{{ route('users.show', Auth::user()) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">个人中心</a>
-              <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">编辑资料</a>
+              <a href="{{ route('users.edit', Auth::user()) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">编辑资料</a>
               <div class="border-t border-gray-100"></div>
               <form action="{{ route('logout') }}" method="POST" class="block px-4 py-2">
                 @csrf
