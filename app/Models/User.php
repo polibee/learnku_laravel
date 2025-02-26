@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Policies\UserPolicy;
 
 class User extends Authenticatable
 {
@@ -50,4 +51,5 @@ class User extends Authenticatable
         $hash=md5(strtolower(trim($this->attributes['email'])));
         return "https://dn-qiniu-avatar.qbox.me/avatar/$hash?s=$size";
     }
+   
 }

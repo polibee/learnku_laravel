@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;  // 添加这行
+
 class UsersController extends Controller
 {
     public function create()
@@ -34,10 +37,17 @@ class UsersController extends Controller
     }
     public function edit(User $user)
     {
-        return view('users.edit',compact('user'));
+        if (! Gate::allows('update', $user)) {
+            abort(403, '无权访问');
+        }
+        return view('users.edit', compact('user'));
     }
+
     public function update(User $user, Request $request)
     {
+        if (! Gate::allows('update', $user)) {
+            abort(403, '无权访问');
+        }
         $validated = $request->validate([    // 移除多余的 $request 参数
             'name' => 'required|max:50',
             'password' => 'nullable|confirmed|min:6'   // 改为 nullable，允许不修改密码
