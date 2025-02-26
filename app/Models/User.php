@@ -22,7 +22,14 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'is_admin'
     ];
+    
+    // 添加访问器方便判断是否为管理员
+    public function isAdmin()
+    {
+        return $this->is_admin;
+    }
 
     /**
      * The attributes that should be hidden for serialization.

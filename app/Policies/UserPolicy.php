@@ -13,6 +13,6 @@ class UserPolicy
 
     public function destroy(User $currentUser, User $user)
     {
-        return $currentUser->id === $user->id;
+        return $currentUser->is_admmin && $currentUser -> id !== $user->id;
     }
 }

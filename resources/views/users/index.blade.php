@@ -7,15 +7,7 @@
   
   <div class="bg-white rounded-lg shadow overflow-hidden">
     @foreach ($users as $user)
-      <div class="flex items-center px-6 py-4 hover:bg-gray-50 transition {{ !$loop->last ? 'border-b border-gray-200' : '' }}">
-        <img class="h-10 w-10 rounded-full object-cover" 
-             src="{{ $user->gravatar() }}" 
-             alt="{{ $user->name }}">
-        <a href="{{ route('users.show', $user) }}" 
-           class="ml-4 text-sm font-medium text-gray-900 hover:text-blue-600 transition">
-          {{ $user->name }}
-        </a>
-      </div>
+        @include('users._user', ['user' => $user])
     @endforeach
   </div>
 
