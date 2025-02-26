@@ -4,7 +4,7 @@
       
       <div class="flex flex-row items-center gap-5 mt-5 sm:justify-end sm:mt-0 sm:ps-5">
         @if (Auth::check())
-          <a class="font-medium text-gray-600 hover:text-gray-900 transition" href="#">用户列表</a>
+          <a class="font-medium text-gray-600 hover:text-gray-900 transition" href="{{ route('users.index') }}">用户列表</a>
           
           <div class="relative group">
             <button class="flex items-center font-medium text-gray-600 hover:text-gray-900 transition">

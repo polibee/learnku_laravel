@@ -9,8 +9,12 @@ Route::get('/', [StaticPagesController::class, 'home'])->name('home');
 Route::get('help', [StaticPagesController::class, 'help'])->name('help');
 Route::get('about', [StaticPagesController::class, 'about'])->name('about');
 Route::get('signup', [UsersController::class, 'create'])->name('signup')->middleware('guest');
-Route::resource('users', UsersController::class)->middleware('auth')->except(['show', 'create', 'store']);
+Route::resource('users', UsersController::class)->middleware('auth')->except(['show', 'create', 'store','index']);
 Route::get('/users/{user}', [UsersController::class, 'show'])->name('users.show');
+
+// 添加用户列表路由
+Route::get('/users', [UsersController::class, 'index'])->name('users.index');
+
 Route::get('login', [SessionsController::class, 'create'])
     ->name('login')
     ->middleware('guest');

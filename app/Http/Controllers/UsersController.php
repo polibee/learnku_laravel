@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Gate;  // 添加这行
 
 class UsersController extends Controller
 {
+    public function index()
+    {
+        $users = User::orderBy('created_at', 'desc')->paginate(10);
+        return view('users.index', compact('users'));
+    }
     public function create()
     {
         return view('users.create');
