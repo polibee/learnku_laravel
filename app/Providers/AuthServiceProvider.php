@@ -15,4 +15,8 @@ class AuthServiceProvider extends ServiceProvider
             return 'App\Policies\\'.class_basename($modelClass).'Policy';
         });
     }
+    protected $policies = [
+        'App\Models\Model' => 'App\Policies\ModelPolicy',
+        'App\Models\Status' => 'App\Policies\StatusPolicy',  // 添加这行
+    ];
 }

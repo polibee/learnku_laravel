@@ -5,9 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Status;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Foundation\Validation\ValidatesRequests;
 
 class StatusesController extends Controller
 {
+    use AuthorizesRequests, ValidatesRequests;
+    
     public function store(Request $request)
     {
         $validated = $request->validate([

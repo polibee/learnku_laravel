@@ -5,10 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Gate;  // 添加这行
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Foundation\Validation\ValidatesRequests;
 
 class UsersController extends Controller
 {
+    use AuthorizesRequests, ValidatesRequests;
+
     public function index()
     {
         $users = User::orderBy('created_at', 'desc')->paginate(10);
@@ -75,11 +79,9 @@ class UsersController extends Controller
     }
     public function destroy(User $user)
     {
-        $this->authorize('destroy',$user);
+        $this->authorize('destroy', $user);
         $user->delete();
-        session()->flash('success','成功删除用户！');
+        session()->flash('success', '成功删除用户！');
         return back();
-
-
     }
 }
