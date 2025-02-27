@@ -11,12 +11,28 @@
                          alt="{{ $user->name }}" 
                          class="w-32 h-32 rounded-full mx-auto object-cover border-4 border-white shadow-lg">
                     <h2 class="mt-4 text-xl font-bold text-gray-900">{{ $user->name }}</h2>
+                    
+                    <div class="mt-6 text-gray-600">
+                        @include('shared._stats', ['user' => $user])
+                    </div>
+
+                    <div class="mt-6">
+                        @if (Auth::check())
+                            @include('users._follow_form')
+                        @endif
+                    </div>
                 </div>
             </div>
         </div>
 
         <div class="md:col-span-8">
-            <section class="bg-white rounded-lg shadow-sm">
+            @if (Auth::check() && Auth::user()->id === $user->id)
+                <div class="mb-6">
+                    @include('shared._status_form')
+                </div>
+            @endif
+
+            <section class="bg-white rounded-lg shadow-sm overflow-hidden">
                 @if ($statuses->count() > 0)
                     <div class="divide-y divide-gray-200">
                         @foreach ($statuses as $status)
