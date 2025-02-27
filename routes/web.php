@@ -20,4 +20,8 @@ Route::get('login', [SessionsController::class, 'create'])
     ->middleware('guest');
 Route::post('login',[SessionsController::class,'store'])->name('login');
 Route::delete('logout',[SessionsController::class,'destory'])->name('logout');
+// 对密码重置路由添加限流
+Route::post('password/email', [PasswordController::class, 'sendResetLinkEmail'])
+    ->middleware('throttle:password-resets')
+    ->name('password.email');
 
