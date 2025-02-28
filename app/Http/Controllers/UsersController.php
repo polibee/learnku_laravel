@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Support\Facades\Storage;
 
 class UsersController extends Controller
 {
@@ -57,21 +58,40 @@ class UsersController extends Controller
 
     public function update(User $user, Request $request)
     {
-        if (! Gate::allows('update', $user)) {
-            abort(403, '无权访问');
-        }
-        $validated = $request->validate([    // 移除多余的 $request 参数
+        $this->authorize('update', $user);
+        
+        $validated = $request->validate([
             'name' => 'required|max:50',
-            'password' => 'nullable|confirmed|min:6'   // 改为 nullable，允许不修改密码
+            'password' => 'nullable|confirmed|min:6',
+            'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
-
+    
         $data = [];
         $data['name'] = $validated['name'];
         
         if ($validated['password']) {
             $data['password'] = bcrypt($validated['password']);
         }
-
+        
+        if ($request->hasFile('avatar')) {
+            $file = $request->file('avatar');
+            if ($file->isValid()) {
+                // 生成文件名
+                $filename = 'avatar_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                
+                // 直接移动文件到目标目录
+                $file->move(storage_path('app/public/avatars'), $filename);
+                
+                // 更新数据
+                $data['avatar'] = 'avatars/' . $filename;
+                
+                // 删除旧头像
+                if ($user->avatar) {
+                    @unlink(storage_path('app/public/' . $user->avatar));
+                }
+            }
+        }
+    
         $user->update($data);
         
         session()->flash('success', '个人资料更新成功！');

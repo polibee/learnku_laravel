@@ -22,8 +22,17 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'is_admin'
+        'is_admin',
+        'avatar'  // 添加到可填充字段
     ];
+    
+    public function getAvatarUrl()
+    {
+        if ($this->avatar) {
+            return asset('storage/' . $this->avatar);
+        }
+        return $this->gravatar();
+    }
     
     // 添加访问器方便判断是否为管理员
     public function isAdmin()
@@ -53,15 +62,21 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
-    public function gravatar($size='100')
+    public function gravatar($size = '100')
     {
-        $hash=md5(strtolower(trim($this->attributes['email'])));
+        if ($this->avatar) {
+            return asset('storage/' . $this->avatar);
+        }
+        $hash = md5(strtolower(trim($this->attributes['email'])));
         return "https://dn-qiniu-avatar.qbox.me/avatar/$hash?s=$size";
     }
     public function feed()
     {
-        return $this->statuses()
-                    ->orderBy('created_at', 'desc');
+        $user_ids = $this->followings->pluck('id')->toArray();
+        array_push($user_ids, $this->id);
+        return Status::whereIn('user_id', $user_ids)
+                              ->with('user')
+                              ->orderBy('created_at', 'desc');
     }
     
     public function statuses()

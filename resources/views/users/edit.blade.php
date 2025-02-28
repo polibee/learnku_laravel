@@ -11,14 +11,28 @@
     @include('shared._errors')
 
     <div class="mb-6 flex justify-center">
-      <a href="http://gravatar.com/emails" target="_blank" class="inline-block hover:opacity-80 transition">
-        <img src="{{ $user->gravatar('200') }}" alt="{{ $user->name }}" class="rounded-full w-32 h-32"/>
-      </a>
+      <div class="text-center">
+        <img src="{{ $user->avatar ? asset('storage/'.$user->avatar) : $user->gravatar('200') }}" 
+             alt="{{ $user->name }}" 
+             class="rounded-full w-32 h-32 mb-3"/>
+        <a href="http://gravatar.com/emails" target="_blank" class="text-sm text-blue-600 hover:text-blue-800">
+          使用 Gravatar 头像
+        </a>
+      </div>
     </div>
 
-    <form method="POST" action="{{ route('users.update', $user->id )}}" class="space-y-6">
+    <form method="POST" action="{{ route('users.update', $user->id )}}" class="space-y-6" enctype="multipart/form-data">
       @method('PATCH')
       @csrf
+
+      <div>
+        <label for="avatar" class="block mb-2 text-sm font-medium text-gray-900">更换头像：</label>
+        <input type="file" 
+               name="avatar" 
+               id="avatar"
+               accept="image/*"
+               class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+      </div>
 
       <div>
         <label for="name" class="block mb-2 text-sm font-medium text-gray-900">名称：</label>

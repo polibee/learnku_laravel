@@ -6,6 +6,12 @@ use App\Http\Controllers\UsersController;
 use App\Http\Controllers\SessionsController;
 use App\Http\Controllers\StatusesController;  // 添加这行
 use App\Http\Controllers\PasswordController;  // 添加这行
+use App\Http\Controllers\CommentsController;
+
+// 添加评论相关路由
+Route::resource('statuses.comments', CommentsController::class)->only([
+    'store', 'destroy'
+])->middleware('auth');
 
 // 修改路由写法，使用完整的类名引用
 Route::get('/', [StaticPagesController::class, 'home'])->name('home');
