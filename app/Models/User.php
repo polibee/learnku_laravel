@@ -68,13 +68,23 @@ class User extends Authenticatable
     {
         return $this->hasMany(Status::class);
     }
-    public function followers()
-    {
-        return $this->belongsToMany(User::class,'followers','user_id','follower_id');
-    }
+    
+    // 删除这个重复的方法
+    // public function followers()
+    // {
+    //     return $this->belongsToMany(User::class,'followers','user_id','follower_id');
+    // }
+    
+    // 获取用户关注的人
     public function followings()
     {
-        return $this->belongsToMany(User::class,'followers','follower_id','user_id');
+        return $this->belongsToMany(User::class, 'followers', 'follower_id', 'user_id');
+    }
+    
+    // 获取关注用户的粉丝
+    public function followers()
+    {
+        return $this->belongsToMany(User::class, 'followers', 'user_id', 'follower_id');
     }
     public function follow($user_ids)
     {
@@ -84,17 +94,15 @@ class User extends Authenticatable
         }
         $this->followings()->sync($user_ids,false);
     }
-    public function unfollow($user_ids)
     
+    public function unfollow($user_ids)
     {
         if (!is_array($user_ids)){
-            $user_ids=compact($user_ids);
+            $user_ids = [$user_ids];  // 修改这里，直接创建数组而不使用 compact
         }
         $this->followings()->detach($user_ids);
-        
-
-        
-    }
+    } // 这里有一个多余的大括号需要删除
+    
     public function isFollowing($user_id)
     {
         return $this->followings->contains($user_id);

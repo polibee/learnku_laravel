@@ -32,3 +32,13 @@ Route::post('password/email', [PasswordController::class, 'sendResetLinkEmail'])
 Route::resource('statuses', StatusesController::class)->middleware('auth')->only(['store', 'destroy']);
 Route::get('/users/{user}/followings',[UsersController::class,'followings'])->name('users.followings');
 Route::get('users/{user}/followers',[UsersController::class,'followers'])->name('users.followers');
+use App\Http\Controllers\FollowersController;
+
+// 添加关注和取消关注的路由
+Route::post('/users/{user}/follow', [FollowersController::class, 'store'])
+    ->middleware('auth')
+    ->name('followers.store');
+    
+Route::delete('/users/{user}/follow', [FollowersController::class, 'destroy'])
+    ->middleware('auth')
+    ->name('followers.destroy');
