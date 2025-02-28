@@ -1,5 +1,5 @@
 <div class="flex justify-around items-center py-4">
-    <a href="#" class="text-center group">
+    <a href="{{ route('users.followings', $user->id) }}" class="text-center group">
         <div class="text-xl font-bold text-gray-900 group-hover:text-blue-600">
             {{ count($user->followings) }}
         </div>
@@ -8,7 +8,7 @@
         </div>
     </a>
 
-    <a href="#" class="text-center group">
+    <a href="{{ route('users.followers', $user->id) }}" class="text-center group">
         <div class="text-xl font-bold text-gray-900 group-hover:text-blue-600">
             {{ count($user->followers) }}
         </div>
@@ -17,7 +17,7 @@
         </div>
     </a>
 
-    <a href="#" class="text-center group">
+    <a href="{{ route('users.show', $user->id) }}" class="text-center group">
         <div class="text-xl font-bold text-gray-900 group-hover:text-blue-600">
             {{ $user->statuses()->count() }}
         </div>

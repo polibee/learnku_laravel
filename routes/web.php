@@ -30,3 +30,5 @@ Route::post('password/email', [PasswordController::class, 'sendResetLinkEmail'])
 
 // 修正微博资源路由的语法
 Route::resource('statuses', StatusesController::class)->middleware('auth')->only(['store', 'destroy']);
+Route::get('/users/{user}/followings',[UsersController::class,'followings'])->name('users.followings');
+Route::get('users/{user}/followers',[UsersController::class,'followers'])->name('users.followers');
