@@ -43,7 +43,7 @@
 
 1. 克隆代码库
 ```bash
-git clone [[repository-url]](https://github.com/polibee/learnku_laravel/tree/master)
+git clone https://github.com/polibee/learnku_laravel/tree/maste
 ```
 2.安装依赖
 ```bash
